@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>病案管理科病历复印辅助系统</title>
+<!-- 在url上使用@标签，可以帮助我们自动加上contextpath -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+
+
+<style>
+	#nav_title
+	{
+		font-size:30px;
+		color:#db5a6b;
+		margin-top:12px;
+		font-weight:bold;
+	}
+
+	#time
+	{
+		color:#db5a6b;
+		float:right;
+		
+		font-size:20px;
+		text-align:center;
+		font-weight:bold;
+	}
+	.t1
+	{
+		margin-left : 70px;
+	}
+	.t2
+	{
+		font-size:20px;
+	}
+</style>
+
+</head>
+<body>
+
+	<div class="container">
+
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<p class="navbar-text  btn-primary">
+					<div id="nav_title" class="t1" >扬州大学附属医院  </div>
+					<div id="nav_title" >病案管理科病历复印登记系统</div>
+				</p>
+			</div>
+		</nav>
+		
+		
+<table class="table table-hover">
+ 	<thead>
+        <tr>
+          <th>#</th>
+          <th>病人住院号</th>
+          <th>病人姓名</th>
+          <th>复印份数</th>
+          <th>每份张数</th>
+          <th>总价</th>
+          <th>支付方式</th>
+          <th>日期</th>
+        </tr>
+        </tr>
+      </thead>
+         
+      <tbody>
+      <tr th:each="reg : ${page}">
+          <th scope="row" th:text="${regStat.count}">1</th>
+          <td>[[${reg.patientId}]]</td>
+          <td>[[${reg.patientName}]]</td>
+          <td>[[${reg.copies}]]</td>
+           <td>[[${reg.sheets}]]</td>
+          <td>[[${reg.totalPrice}]]</td>
+     
+    
+   	<th:block >
+     		<td th:if="${reg.CashPay} == 现金支付" th:text="现金支付" style="color:red"></td>
+     		<td th:if="${reg.CashPay} == 扫码支付" th:text="扫码支付" style="color:#339900"></td>
+     		<td th:if="${reg.CashPay} == 本院职工复印" th:text="本院职工复印" style="color:#7F007F;"></td>
+     	</th:block>
+   
+     	
+          
+           <td>[[${reg.registerTime}]]</td>
+        </tr>
+      </tbody>
+</table>
+
+	</div>
+
+	
+
+
+<div class="container">
+		
+
+	</div>
+
+<script type="text/javascript">
+	$("#submit1").click(function(){
+		var patientId = $("#input1").val();
+		if(patientId == "" || patientId == null){
+			alert("病人住院号不能为空");
+			return;
+			
+		}         
+		var patientName = $("#input2").val();
+		if(patientName == "" || patientName == null) {
+			alert("病人姓名不能为空");
+			return;
+		}
+		var reason = $("#input7").val();
+		
+		var copies = $("#input3").val();
+		if(copies == "" || copies == null || isNaN(Number(copies)) ) {
+			alert("复印份数不能为空或要填写为数字");
+			return;
+		}
+		
+		var sheets = $("#input4").val();
+		if(sheets == "" || sheets == null || isNaN(Number(sheets)) ) {
+			alert("每份张数不能为空或要填写为数字");
+			return;
+		}
+		var price = $("#input5").val();
+		var totalPrice = $("#input6").val();
+		
+		
+		
+		
+		var url ="/bak/collect";
+		var args = {
+				patientId:patientId,
+				patientName:patientName,
+				reason:reason,
+				copies:copies,
+				sheets:sheets,
+				price:price,
+				totalPrice:totalPrice
+		};
+		
+		$.post(url, args, function(data){
+			
+			if(data == "SUCCESS"){
+				alert("这条数据成功写入数据库！！");
+				 window.location.href = "/bak/";	
+			};
+			if(data == "ERROR"){
+				alert("这条数据写入数据库出错，请检查或联系系统管理员！！");
+			}
+			
+		})
+
+	});
+
+</script>
+
+
+
+
+</body>
+</html>
+
+<!-- 点击 -->
+<script>
+	$("#input1").blur(function() {
+		var patientId = $("#input1").val();
+		if (patientId == "" || patientId == null) {
+			alert("病人住院号，您未填写");
+			$("#input1").focus();
+			return;
+		}
+	});
+
+	$("#input2").blur(function() {
+		var patientName = $("#input2").val();
+		if (patientName == "" || patientName == null) {
+			alert("病人姓名，您未填写");
+			$("#input2").focus();
+			return;
+		}
+	});
+
+	$("#input3").blur(function() {
+		var copies = $("#input3").val();
+		if (copies == "" || copies == null) {
+			alert("复印份数，您未填写");
+			return;
+		}
+		var numcopies = Number(copies);
+		if (isNaN(numcopies))
+		{
+			alert("复印份数，您输入的不是数字");
+			$("#input3").focus();
+		    return;
+		} 
+		
+	});
+
+	$("#input4").blur(function() {
+		var copies = $("#input3").val();
+		var sheets = $("#input4").val();
+		var numsheets = Number(sheets);
+		if (isNaN(numsheets))
+		{
+			alert("复印张数，您输入的不是数字");
+			$("#input4").focus();
+		    return;
+		} 
+		var totalPrice = copies * sheets * 35 / 100;
+		//alert(totalPrice);
+		$("#input6").val(totalPrice + "元");
+
+	});
+	
+</script>
+
+
+
+
+
+
+
+

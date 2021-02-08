@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>病案管理科病历复印辅助系统</title>
+<!-- 在url上使用@标签，可以帮助我们自动加上contextpath -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<link rel="stylesheet"
+	th:href="@{/css/bootstrap-datetimepicker.min.css}">
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/bootstrap-datetimepicker.min.js}"></script>
+
+
+<style>
+#nav_title {
+	font-size: 30px;
+	color: #db5a6b;
+	margin-top: 12px;
+	font-weight: bold;
+}
+
+#time {
+	color: #db5a6b;
+	float: right;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.t1 {
+	margin-left: 70px;
+}
+
+.t2 {
+	font-size: 20px;
+}
+h3
+{
+	color:#db5a6b;
+}
+</style>
+
+</head>
+<body>
+
+	<div class="container">
+
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<p class="navbar-text  btn-primary">
+				<div id="nav_title" class="t1">扬州大学附属医院</div>
+				<div id="nav_title">病案管理科病历复印登记系统</div>
+				</p>
+			</div>
+		</nav>
+	</div>
+
+	<div class="container">
+		<form action="/bak/listDoScope" method="post" >
+			<div class="form-group">
+				<label for="starttime"><h3>起始日期选择：</h3></label> 
+				<input	type="date" class="form-control" id="starttime" name="startTime"
+					>
+			</div>
+			<div class="form-group">
+				<label for="endtime"><h3>结束时间选择：</h3></label> <input
+					type="date" class="form-control" id="endtime" name="endTime"
+					>
+			</div>
+			
+			<button class="btn btn-danger btn-lg" style="float:right" type="submit">查询提交</button>
+			
+		</form>
+	
+	</div>
+
+	
+
+
+
+
+</body>
+</html>
