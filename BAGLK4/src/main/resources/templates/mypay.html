@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>病案管理科病历复印辅助系统</title>
+<!-- 在url上使用@标签，可以帮助我们自动加上contextpath -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<script th:src="@{/js/bootstrap-table.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+
+	<div class="container">
+		
+		<form action="orderSubmit" method="post">
+			<tr>
+				订单编号：<input type="text" name="orderNo" />
+			</tr>
+			
+			<tr>
+				商品描述：<input type="text" name="remark" />
+			</tr>
+			
+			<tr>
+				价格：<input type="text" name="price" />
+			</tr>
+			<tr>
+				<input type="submit" value="下订单">
+			</tr>
+		</form>
+		
+
+	</div>
+
+
+</body>
+</html>
+

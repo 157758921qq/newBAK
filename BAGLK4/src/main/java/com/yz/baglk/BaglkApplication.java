@@ -1,0 +1,13 @@
+package com.yz.baglk;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BaglkApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(BaglkApplication.class, args);
+	}
+
+}
